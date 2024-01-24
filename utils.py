@@ -109,9 +109,9 @@ class Parser(object):
                 # img_file = re.findall(pattern, src)[0][0].split('/')[-1].rstrip('?') ## e.g. https://img-blog.csdnimg.cn/20200228210146931.png?
                 img_file = join(self.fig_dir, img_file)
                 if self.is_win:
-                    download_img_cmd = 'aria2c.exe --file-allocation=none -c -x 10 -s 10 -o {} {}'.format(img_file, src)
+                    download_img_cmd = r'.\aria2\aria2c.exe --file-allocation=none -c -x 10 -s 10 -o {} {}'.format(img_file, src)
                 else:
-                    download_img_cmd = 'aria2c --file-allocation=none -c -x 10 -s 10 -o {} {}'.format(img_file, src)
+                    download_img_cmd = r'.\aria2\aria2c --file-allocation=none -c -x 10 -s 10 -o {} {}'.format(img_file, src)
                 if not exists(img_file):
                     os.system(download_img_cmd)
                 # soup.attrs['src'] = img_file
