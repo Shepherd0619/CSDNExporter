@@ -1,25 +1,31 @@
 @echo off
-@title CSDNExporter
+@title CSDNExporter - Shepherd Zhu's Fork
 @CHCP 65001
 @cls
 @color 9F
 @echo ================================================================================
 @echo ^|^|=================== CSDNExporter（Windows版本） ==========================^|^|
+@echo ^|^|=================== Shepherd Zhu's Fork ==========================^|^|
 @echo ^|^|============= Github链接：https://github.com/axzml/CSDNExporter ==============^|^|
 @echo ================================================================================
 
-set download_category="true"
-set category_url="https://blog.csdn.net/weixin_43792401/category_12292383.html"
-set article_url="https://blog.csdn.net/weixin_43792401/article/details/130065744"
-set start_page=1
-set page_num=100
+set /p download_category="Download a category? (true/false): "
+if "%download_category%"=="true" (
+    set /p category_url="Enter the category URL: "
+    set /p start_page="Enter the start page: "
+    set /p page_num="Enter the number of pages to download: "
+) else (
+    set /p article_url="Enter the article URL: "
+)
+
 set markdown_dir=markdown
 set pdf_dir=pdf\
 
-if %download_category% == "true" (
-    echo "download a category"
+echo "Downloading..."
+
+if "%download_category%"=="true" (
     python -u main.py ^
-        --category_url %category_url% ^
+        --category_url "%category_url%" ^
         --start_page %start_page% ^
         --page_num %page_num% ^
         --markdown_dir %markdown_dir% ^
@@ -30,9 +36,8 @@ if %download_category% == "true" (
         @REM --with_title ^
         @REM --rm_cache
 ) else (
-    echo "download an article"
     python -u main.py ^
-        --article_url %article_url% ^
+        --article_url "%article_url%" ^
         --markdown_dir %markdown_dir% ^
         --pdf_dir %pdf_dir% 
         --to_pdf ^
@@ -41,4 +46,5 @@ if %download_category% == "true" (
         --combine_together
         --is_win 1
 )
+
 pause
